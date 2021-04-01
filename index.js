@@ -17,17 +17,18 @@ const server = http.createServer((req, res) => {
 
     const name = reqURL.searchParams.get('name')
     let statusCode, response
+    
+    ;[statusCode, response] = [404, 'Path is not correct.']
 
-    switch( reqURL.pathname ){
+    if(req.method == 'GET'){
+       switch( reqURL.pathname ){
         case '/hello':
             ;[statusCode, response] = processHelloRequest( (name) ? name : undefined )
             break
         case '/goodbye':
             ;[statusCode, response] = processGoodbyeRequest( (name) ? name : undefined )
             break
-        default:
-            ;[statusCode, response] = [404, 'Path is not correct.']
-
+        }
     }
 
     res.statusCode = statusCode;
